@@ -1,0 +1,10 @@
+#!/bin/sh
+# Check if the command is executed in a git repository
+SELF="mvnw"
+
+if `git rev-parse 2>/dev/null`; then
+    exit 0
+else
+    echo "$SELF: your are not working in a git repository. Aborting..."
+    exit 1
+fi

@@ -1,0 +1,11 @@
+#!/bin/sh
+# Check if needed commands are available
+SELF="mvnw"
+
+if test -n "$(git status --porcelain)"; then
+    if test -n "$(git diff --exit-code)" || 
+        test -n "$(git diff --cached --exit-code)"; then
+        echo "$SELF: Repository is not clean, there is some files to commit. Aborting..."
+        exit 1
+    fi
+fi

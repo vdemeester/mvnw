@@ -1,0 +1,15 @@
+#!/bin/sh
+# Check if needed commands are available
+SELF="mvnw"
+
+# Checking for mvn
+command -v mvn >/dev/null || {
+    echo "$SELF: mvn command not found." 1>&2
+    exit 1
+}
+
+# Checking for git
+command -v git >/dev/null || {
+    echo "$SELF: git command not found." 1>&2
+    exit 1
+}
