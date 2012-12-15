@@ -1,0 +1,1 @@
+eval "$($PWD/bin/mvnw init -)"
