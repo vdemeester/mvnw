@@ -16,4 +16,9 @@ The features aimed are the following :
 
 This is implemented based on [37signals/sub](http://github.com/37signals/sub). There should be a lot of simple commands and few that are basically just calling them in the right order (with the right workflow). Commands are mainly shell script to keep the _dependencies_ small (no need to have ruby, …).
 
-
+[maven]: http://maven.apache.org/
+[git]: http://git-scm.com
+[gradle]: http://www.gradle.org/
+[maven-versions-plugin]: http://mojo.codehaus.org/versions-maven-plugin/
+[maven-release-plugin]: http://maven.apache.org/plugins/maven-release-plugin/
+[git-flow]: https://github.com/nvie/gitflow
