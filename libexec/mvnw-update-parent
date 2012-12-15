@@ -1,0 +1,54 @@
+#!/bin/sh
+# Usage: mvnw update-parent <options>
+# Summary: Update the parent pom and commit if modified
+# Help: This use mvn-versions-plugin and the versions:update-parent goal.
+set -e
+SELF="mvnw"
+test -n "$MVNW_DEBUG" && set -x
+
+# Provide completion
+if test "$1" = "--complete"; then
+    echo --no-commit
+    echo --quiet
+    exit
+fi
+OPTIONS=$(getopt -o qn --long quiet,no-commit -n "$0" -- "$@")
+eval set -- "$OPTIONS"
+
+while true ; do
+    case "$1" in
+            -q|--quiet) QUIET=1 ; shift 1 ;;
+            -n|--no-commit) NOCOMMIT=1 ; shift 1 ;;
+            --) shift ; break ;;
+            *) echo "Internal error!" ; exit 1 ;;
+    esac
+done
+
+# 1. Initial checks
+mvnw-check-commands
+mvnw-check-repository
+mvnw-check-repository-clean
+mvnw-check-pom-presence
+
+# 1.1. Check the version of the project
+VERSION=$(mvnw-project-version)
+if test "$VERSION" = "${VERSION%-SNAPSHOT}"; then
+    echo "$SELF: version specified is not a snapshot. Aborting..."
+    exit 2
+fi
+
+# 2. Do the real work
+mvn versions:update-parent
+
+if test -z "$QUIET"; then
+    echo
+    echo "Please make sur everything is running smooth."
+    echo "Then, quit the shell and the changes will be commited."
+    MVNW_COMMAND="update-parent" $SHELL
+fi
+
+mvn versions:commit
+if test -z "$NOCOMMIT"; then
+    git commit -a -m "Update parent version (${VERSION})"
+fi
+

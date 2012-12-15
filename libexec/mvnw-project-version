@@ -1,0 +1,10 @@
+#!/bin/sh
+# Return the current version
+SELF="mvnw"
+test -n "$MVNW_DEBUG" && set -x
+# Initial checks
+mvnw-check-commands
+
+MVN_OUTPUT=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version`
+CURRENT_VERSION=`echo "$MVN_OUTPUT" | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }'`
+echo $CURRENT_VERSION
