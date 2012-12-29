@@ -12,6 +12,13 @@ The features aimed are the following :
 * Add a hook/property system (simple but powerful). When mvn is called in a maven managed directory, read some files and folder (by convention) to get information about the project, stuff to do before or after commands, etc.
 * Getting along [maven-release-plugin][] and [git-flow][] (or at least the git-flow workflow).
 
+## Table of Contents
+
+* [Installation](#installation)
+  * [Basic Github Checkout](#basic-github-checkout)
+  * [Upgrading](#upgrading)
+* [Technical stuff](#technical-stuff)
+
 ## Installation
 
 ### Basic Github Checkout
