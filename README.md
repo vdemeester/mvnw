@@ -65,6 +65,10 @@ $ git pull
 
 ## Usage
 
+``mvnw`` contains a set of subcommand. If the first argument specified is not
+one of this command, it runs ``mvn`` with the arguments specified ; that way
+it can be used in place of the ``mvn`` command.
+
 Most of the time it's possible to pass additionnal arguments to the subcommand
 that will be _forward_ to the ``mvn`` command(s), using ``--``.
 
