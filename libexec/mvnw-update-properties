@@ -24,6 +24,8 @@ while true ; do
     esac
 done
 
+mvnw-run-hooks update-properties pre
+
 # 1. Initial checks
 mvnw-check-commands
 mvnw-check-repository
@@ -33,6 +35,8 @@ mvnw-check-version snapshot
 
 # 2. Do the real work
 mvn versions:update-properties $@
+
+mvnw-run-hooks update-properties validate
 
 if test -z "$QUIET"; then
     echo
@@ -46,3 +50,4 @@ if test -z "$NOCOMMIT"; then
     git commit -a -m "Update dependencies porperties"
 fi
 
+mvnw-run-hooks update-properties post
