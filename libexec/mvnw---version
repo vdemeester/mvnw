@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+[ -n "$MVNW_DEBUG" ] && set -x
+
+version=0.1.0
+
+cd "$MVNW_ROOT"
+git_revision="$(git describe --tags HEAD 2>/dev/null || true)"
+git_revision="${git_revision#v}"
+
+echo "mvnw ${git_revision:-$version}"

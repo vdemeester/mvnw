@@ -28,6 +28,9 @@ case "$command" in
 "" | "-h" | "--help" )
   exec mvnw-help
   ;;
+"-v" | "--version" )
+  exec mvnw---version
+  ;;
 * )
   command_path="$(command -v "mvnw-$command" || true)"
   if [ ! -x "$command_path" ]; then
