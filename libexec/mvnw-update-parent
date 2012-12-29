@@ -29,13 +29,7 @@ mvnw-check-commands
 mvnw-check-repository
 mvnw-check-repository-clean
 mvnw-check-pom-presence
-
-# 1.1. Check the version of the project
-VERSION=$(mvnw-project-version)
-if test "$VERSION" = "${VERSION%-SNAPSHOT}"; then
-    echo "$SELF: version specified is not a snapshot. Aborting..."
-    exit 2
-fi
+mvnw-check-version snapshot
 
 # 2. Do the real work
 mvn versions:update-parent

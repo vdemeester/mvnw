@@ -1,0 +1,31 @@
+#!/bin/sh
+# Usage: mvnw check-version [snapshot|release]
+# Summary: Check if the version is corresponding to the argument
+set -e
+SELF="mvnw"
+test -n "$MVNW_DEBUG" && set -x
+
+# Provide completion
+if test "$1" = "--complete"; then
+    echo snapshot
+    echo release
+    exit
+fi
+
+VERSION=$(mvnw-project-version)
+VERSION_NON_SNAPSHOT="${VERSION%-SNAPSHOT}"
+if test "$VERSION" = "${VERSION_NON_SNAPSHOT}"; then
+    if test "$1" = "snapshot"; then
+        echo "$SELF: version specified is not a snapshot. Aborting..."
+        exit 2
+    else
+        exit 0
+    fi
+else
+    if test "$1" = "snapshot"; then
+        exit 0
+    else
+        echo "$SELF: version specified is a snapshot. Aborting..."
+        exit 2
+    fi
+fi
