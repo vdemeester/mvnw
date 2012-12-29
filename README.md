@@ -17,6 +17,9 @@ The features aimed are the following :
 * [Installation](#installation)
   * [Basic Github Checkout](#basic-github-checkout)
   * [Upgrading](#upgrading)
+* [Usage](#usage)
+  * [mvnw update-parent](#mvnw-update-parent)
+  * [mvnw update-properties](#mvnw-update-properties)
 * [Technical stuff](#technical-stuff)
 
 ## Installation
@@ -51,7 +54,6 @@ __Zsh note__: Modify your ~/.zshenv file instead of ~/.bash_profile.
 
 __Ubuntu note__: Same as Ubuntu note for point 2 above.
 
-
 ### Upgrading
 
 If you've installed mvnw manually using git, you can upgrade your installation to the cutting-edge version at any time.
@@ -60,6 +62,42 @@ If you've installed mvnw manually using git, you can upgrade your installation t
 $ cd ~/.mvnw
 $ git pull
 ```
+
+## Usage
+
+Most of the time it's possible to pass additionnal arguments to the subcommand
+that will be _forward_ to the ``mvn`` command(s), using ``--``.
+
+```sh
+$ mvnw update-properties -- -Dincludes=org.shortbrain.* -DprocessDependencyManagement=false
+```
+
+The most common subcommands (and the _public ones_) are :
+
+### mvnw update-parent
+
+Updates the parent of the current ``pom.xml`` by using the ``mvn
+versions:update-parent`` and commit the updated pom.xml. It runs few check
+like project version, state of the git repository, ``pom.xml`` precense, etc.
+
+There is 3 hooks for this command :
+* __pre__ for executing stuff before the actual run
+* __validate__ for executing stuff after the parent update but before
+  committing. If one of these hooks failed, the whole run is ended.
+* __post__ for executing stuff after the actual run
+
+### mvnw update-properties
+
+Updates the properties used as versions in the current ``pom.xml`` by using the
+``mvn versions:update-properties`` and commit the updated pom.xml. 
+It runs few check like project version, state of the git repository, 
+``pom.xml`` precense, etc.
+
+There is 3 hooks for this command :
+* __pre__ for executing stuff before the actual run
+* __validate__ for executing stuff after the parent update but before
+  committing. If one of these hooks failed, the whole run is ended.
+* __post__ for executing stuff after the actual run
 
 ## Technical stuff
 
