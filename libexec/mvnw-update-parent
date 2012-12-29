@@ -24,6 +24,8 @@ while true ; do
     esac
 done
 
+mvnw-run-hooks update-parent pre
+
 # 1. Initial checks
 mvnw-check-commands
 mvnw-check-repository
@@ -34,6 +36,8 @@ mvnw-check-version snapshot
 # 2. Do the real work
 mvn versions:update-parent
 
+mvnw-run-hooks update-parent validate
+
 if test -z "$QUIET"; then
     echo
     echo "Please make sur everything is running smooth."
@@ -41,8 +45,10 @@ if test -z "$QUIET"; then
     MVNW_COMMAND="update-parent" $SHELL
 fi
 
+
 mvn versions:commit
 if test -z "$NOCOMMIT"; then
     git commit -a -m "Update parent version (${VERSION})"
 fi
 
+mvnw-run-hooks update-parent post

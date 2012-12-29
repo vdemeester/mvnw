@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+test -n "$MVNW_DEBUG" && set -x
+
+MVNW_COMMAND="$1"
+shift
+MVNW_TYPE="$1"
+if test -z "$MVNW_COMMAND" || test -z "$MVNW_TYPE"; then
+echo "usage: mvnw run-hooks COMMAND TYPE" >&2
+  exit 1
+fi
+
+for hook in $(mvnw-hooks $MVNW_COMMAND $MVNW_TYPE); do
+    $hook
+done

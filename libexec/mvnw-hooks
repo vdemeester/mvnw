@@ -1,0 +1,47 @@
+#!/bin/sh
+set -e
+test -n "$MVNW_DEBUG" && set -x
+
+MVNW_COMMAND="$1"
+shift
+MVNW_TYPE="$1"
+if test -z "$MVNW_COMMAND" || test -z "$MVNW_TYPE"; then
+echo "usage: mvnw hooks COMMAND TYPE" >&2
+  exit 1
+fi
+
+test -z "$MVNW_HOOK_PATH" && MVNW_HOOK_PATH="$_MVNW_ROOT/hook.d"
+test -d $MVNW_HOOK_PATH/"$MVNW_COMMAND" || mkdir -p $MVNW_HOOK_PATH/"$MVNW_COMMAND"
+hook_path="${MVNW_HOOK_PATH}:$PWD/mvnw.d"
+export MVNW_HOOK_PATH="$hook_path"
+
+resolve_link() {
+  readlink $1
+}
+
+realpath() {
+  local cwd="$(pwd)"
+  local base="$(basename $1)"
+  local path="$1"
+
+  while [ -n "$path" ]; do
+      cd "${path%/*}"
+      local name="${path##*/}"
+      path="$(resolve_link "$name" || true)"
+  done
+
+echo "$(pwd)/$base"
+  cd "$cwd"
+}
+
+#shopt -s nullglob
+(IFS="$(printf ':')"
+for path in ${MVNW_HOOK_PATH}; do
+for script in $path/"$MVNW_COMMAND"/$MVNW_TYPE.*; do
+    if test -e "$script"; then
+        echo $(realpath $script)
+    fi
+  done
+done
+)
+#shopt -u nullglob
