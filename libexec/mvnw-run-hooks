@@ -11,5 +11,7 @@ echo "usage: mvnw run-hooks COMMAND TYPE" >&2
 fi
 
 for hook in $(mvnw-hooks $MVNW_COMMAND $MVNW_TYPE); do
-    $hook
+    if test -x $hook; then
+        $hook
+    fi
 done
