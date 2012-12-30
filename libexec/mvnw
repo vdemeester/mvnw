@@ -23,6 +23,10 @@ libexec_path="$(abs_dirname "$0")"
 export _MVNW_ROOT="$(abs_dirname "$libexec_path")"
 export PATH="${libexec_path}:$PATH"
 
+for script in $(mvnw-hooks source); do
+    source $script
+done
+
 command="$1"
 case "$command" in
 "" | "-h" | "--help" )

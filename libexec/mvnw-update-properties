@@ -34,7 +34,10 @@ mvnw-check-pom-presence
 mvnw-check-version snapshot
 
 # 2. Do the real work
-mvn versions:update-properties $@
+if test "$@" != ""; then
+    export UPDATE_PROPERTIES_ARGS="$@"
+fi
+mvn versions:update-properties $UPDATE_PROPERTIES_ARGS
 
 mvnw-run-hooks update-properties validate
 

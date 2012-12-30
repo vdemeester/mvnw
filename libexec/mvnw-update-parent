@@ -34,7 +34,10 @@ mvnw-check-pom-presence
 mvnw-check-version snapshot
 
 # 2. Do the real work
-mvn versions:update-parent
+if test "$@" != ""; then
+    export UPDATE_PARENT_ARGS="$@"
+fi
+mvn versions:update-parent $UPDATE_PARENT_ARGS
 
 mvnw-run-hooks update-parent validate
 

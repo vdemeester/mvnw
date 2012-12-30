@@ -5,7 +5,8 @@ test -n "$MVNW_DEBUG" && set -x
 MVNW_COMMAND="$1"
 shift
 MVNW_TYPE="$1"
-if test -z "$MVNW_COMMAND" || test -z "$MVNW_TYPE"; then
+if test -z "$MVNW_COMMAND" || 
+    (test "$MVNW_COMMAND" != "source" && test -z "$MVNW_TYPE"); then
 echo "usage: mvnw hooks COMMAND TYPE" >&2
   exit 1
 fi
@@ -35,13 +36,25 @@ echo "$(pwd)/$base"
 }
 
 #shopt -s nullglob
-(IFS="$(printf ':')"
-for path in ${MVNW_HOOK_PATH}; do
-for script in $path/"$MVNW_COMMAND"/$MVNW_TYPE.*; do
-    if test -e "$script"; then
-        echo $(realpath $script)
-    fi
-  done
-done
-)
+if test "$MVNW_COMMAND" = "source"; then
+    (IFS="$(printf ':')"
+    for path in ${MVNW_HOOK_PATH}; do
+    for script in $path/mvnwrc; do
+        if test -e "$script"; then
+            echo $(realpath $script)
+        fi
+      done
+    done
+    )
+else
+    (IFS="$(printf ':')"
+    for path in ${MVNW_HOOK_PATH}; do
+    for script in $path/"$MVNW_COMMAND"/$MVNW_TYPE.*; do
+        if test -e "$script"; then
+            echo $(realpath $script)
+        fi
+      done
+    done
+    )
+fi
 #shopt -u nullglob
