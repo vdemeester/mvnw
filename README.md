@@ -20,6 +20,10 @@ The features aimed are the following :
 * [Usage](#usage)
   * [mvnw update-parent](#mvnw-update-parent)
   * [mvnw update-properties](#mvnw-update-properties)
+  * [others](#others)
+* [Hooks](#hooks)
+  * [source hook](#source-hook)
+  * [command hook](#command-hook)
 * [Technical stuff](#technical-stuff)
 
 ## Installation
@@ -66,7 +70,7 @@ $ git pull
 ## Usage
 
 ``mvnw`` contains a set of subcommand. If the first argument specified is not
-one of this command, it runs ``mvn`` with the arguments specified ; that way
+one of these command, it runs ``mvn`` with the arguments specified ; that way
 it can be used in place of the ``mvn`` command.
 
 Most of the time it's possible to pass additionnal arguments to the subcommand
@@ -102,6 +106,48 @@ There is 3 hooks for this command :
 * __validate__ for executing stuff after the parent update but before
   committing. If one of these hooks failed, the whole run is ended.
 * __post__ for executing stuff after the actual run
+
+### others
+
+* __project-version__ : return the version of the project.
+
+## Hooks
+
+``mvnw`` has a hook system that let you tune a bit its behavior. There is too
+kind of hook : source and commands. ``mvnw`` will look for hooks in two folder
+: ``$_MVNW_ROOT/hook.d`` (usually ``$HOME/.mvnw/hook.d``) and ``$PWD/.mvn.d``
+(that way, you can embedded hooks for specific projects).
+
+### source hook
+
+``mvnw`` will look for a ``mvnrc`` file in the hooks folder and source it.
+As it's a shell script that is source, what it is doing is up to you. But
+there is a few environment variables you could set that will be used if
+present by subcommands.
+
+```sh
+# additionnal args for mvnw in the update-properties subcommand
+export UPDATE_PROPERTIES_ARGS="-DprocessDependencyManagement=false"
+```
+
+### command hook
+
+``mvnw`` will execute command based on the subcommand and the step, looking
+for ``$HOOK_PATH/$command/$step.*``. It executes the command so it can be 
+written in any language as long as it is an executable file.
+
+The steps should be documented for each command but here is an example for the
+``update-properties`` command.
+
+```sh
+$ cat $PWD/.mvnw.d/update-properties/pre.hello.sh
+#!/bin/sh
+echo "Hello..."
+$ cat $HOME/.mvnw/hook.d/update-properties/validate.test.sh
+#!/bin/sh
+# Runs compilation and tests
+mvn clean test
+```
 
 ## Technical stuff
 
