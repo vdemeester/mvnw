@@ -12,7 +12,7 @@ fi
 
 test -z "$MVNW_HOOK_PATH" && MVNW_HOOK_PATH="$_MVNW_ROOT/hook.d"
 test -d $MVNW_HOOK_PATH/"$MVNW_COMMAND" || mkdir -p $MVNW_HOOK_PATH/"$MVNW_COMMAND"
-hook_path="${MVNW_HOOK_PATH}:$PWD/mvnw.d"
+hook_path="${MVNW_HOOK_PATH}:$PWD/.mvnw.d"
 export MVNW_HOOK_PATH="$hook_path"
 
 resolve_link() {
