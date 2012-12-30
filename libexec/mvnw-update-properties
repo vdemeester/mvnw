@@ -34,7 +34,7 @@ mvnw-check-pom-presence
 mvnw-check-version snapshot
 
 # 2. Do the real work
-if test "$@" != ""; then
+if test $# -gt 0; then
     export UPDATE_PROPERTIES_ARGS="$@"
 fi
 mvn versions:update-properties $UPDATE_PROPERTIES_ARGS
