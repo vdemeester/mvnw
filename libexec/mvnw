@@ -39,7 +39,7 @@ case "$command" in
   command_path="$(command -v "mvnw-$command" || true)"
   if [ ! -x "$command_path" ]; then
     # Run maven
-    mvn $@
+    exec mvn $@
   fi
 
   shift
