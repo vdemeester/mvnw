@@ -1,0 +1,50 @@
+{
+
+
+
+
+
+
+    "creator": "Vincent Demeester <vincent+git@demeester.fr>", 
+
+
+
+
+
+
+    "reporter": "Vincent Demeester <vincent+git@demeester.fr>", 
+
+
+
+
+
+
+    "severity": "minor", 
+
+
+
+
+
+
+    "status": "open", 
+
+
+
+
+
+
+    "summary": "Add mvn-release-flow to mvnw (http://shortbrain.org/posts/maven-release-gitflow/)", 
+
+
+
+
+
+
+    "time": "Sat, 07 Sep 2013 20:31:55 +0000"
+
+
+
+
+
+
+}
