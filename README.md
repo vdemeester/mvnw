@@ -159,3 +159,7 @@ This is implemented based on [37signals/sub](http://github.com/37signals/sub). T
 [maven-versions-plugin]: http://mojo.codehaus.org/versions-maven-plugin/
 [maven-release-plugin]: http://maven.apache.org/plugins/maven-release-plugin/
 [git-flow]: https://github.com/nvie/gitflow
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vdemeester/mvnw/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
